@@ -1,0 +1,26 @@
+bin/tangence-introspect
+bin/tangence-subscribeall
+Build.PL
+Changes
+doc/Tangence-overview.txt
+lib/Net/Async/Tangence.pm
+lib/Net/Async/Tangence/Client.pm
+lib/Net/Async/Tangence/Protocol.pm
+lib/Net/Async/Tangence/Server.pm
+lib/Net/Async/Tangence/ServerProtocol.pm
+MANIFEST			This list of files
+t/00use.t
+t/01async-protocol.t
+t/02async-server.t
+t/03async-client.t
+t/04async-xlink.t
+t/99pod.t
+t/Bag.pm
+t/Ball.pm
+t/Colourable.pm
+t/Conversation.pm
+t/TestObj.pm
+Makefile.PL
+README
+LICENSE
+META.yml
