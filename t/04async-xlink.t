@@ -3,7 +3,7 @@
 use strict;
 
 use Test::More tests => 21;
-use Test::Exception;
+use Test::Fatal qw( dies_ok );
 use Test::Memory::Cycle;
 use IO::Async::Test;
 use IO::Async::Loop;
@@ -20,7 +20,9 @@ use t::Ball;
 my $loop = IO::Async::Loop->new();
 testing_loop( $loop );
 
-my $registry = Tangence::Registry->new();
+my $registry = Tangence::Registry->new(
+   tanfile => "t/Ball.tan",
+);
 my $ball = $registry->construct(
    "t::Ball",
    colour => "red",
