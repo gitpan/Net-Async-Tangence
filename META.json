@@ -4,7 +4,7 @@
       "Paul Evans <leonerd@leonerd.org.uk>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.110930",
+   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.112621",
    "license" : [
       "perl_5"
    ],
@@ -42,23 +42,23 @@
    "provides" : {
       "Net::Async::Tangence" : {
          "file" : "lib/Net/Async/Tangence.pm",
-         "version" : "0.07"
+         "version" : "0.08"
       },
       "Net::Async::Tangence::Client" : {
          "file" : "lib/Net/Async/Tangence/Client.pm",
-         "version" : "0.07"
+         "version" : "0.08"
       },
       "Net::Async::Tangence::Protocol" : {
          "file" : "lib/Net/Async/Tangence/Protocol.pm",
-         "version" : "0.07"
+         "version" : "0.08"
       },
       "Net::Async::Tangence::Server" : {
          "file" : "lib/Net/Async/Tangence/Server.pm",
-         "version" : "0.07"
+         "version" : "0.08"
       },
       "Net::Async::Tangence::ServerProtocol" : {
          "file" : "lib/Net/Async/Tangence/ServerProtocol.pm",
-         "version" : "0.07"
+         "version" : "0.08"
       }
    },
    "release_status" : "stable",
@@ -67,5 +67,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.07"
+   "version" : "0.08"
 }

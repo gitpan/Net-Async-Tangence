@@ -2,31 +2,31 @@
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
-          'NAME' => 'Net::Async::Tangence',
-          'VERSION_FROM' => 'lib/Net/Async/Tangence.pm',
-          'PREREQ_PM' => {
-                           'Encode' => 0,
-                           'Exporter' => '5.57',
-                           'IO::Async::Listener' => '0.36',
-                           'IO::Async::Loop' => '0.16',
-                           'IO::Async::Protocol::Stream' => 0,
-                           'IO::Async::Stream' => 0,
-                           'IO::Async::Test' => 0,
-                           'Tangence::Client' => '0.07',
-                           'Tangence::Server' => '0.07',
-                           'Test::Fatal' => '0.006',
-                           'Test::HexString' => 0,
-                           'Test::Identity' => 0,
-                           'Test::Memory::Cycle' => 0,
-                           'Test::More' => 0,
-                           'Test::Refcount' => 0,
-                           'URI::Split' => 0
-                         },
-          'INSTALLDIRS' => 'site',
-          'EXE_FILES' => [
-                           'bin/tangence-introspect',
-                           'bin/tangence-subscribeall'
-                         ],
-          'PL_FILES' => {}
-        )
+  'NAME' => 'Net::Async::Tangence',
+  'VERSION_FROM' => 'lib/Net/Async/Tangence.pm',
+  'PREREQ_PM' => {
+                   'Encode' => 0,
+                   'Exporter' => '5.57',
+                   'IO::Async::Listener' => '0.36',
+                   'IO::Async::Loop' => '0.16',
+                   'IO::Async::Protocol::Stream' => 0,
+                   'IO::Async::Stream' => 0,
+                   'IO::Async::Test' => 0,
+                   'Tangence::Client' => '0.07',
+                   'Tangence::Server' => '0.07',
+                   'Test::Fatal' => '0.006',
+                   'Test::HexString' => 0,
+                   'Test::Identity' => 0,
+                   'Test::Memory::Cycle' => 0,
+                   'Test::More' => 0,
+                   'Test::Refcount' => 0,
+                   'URI::Split' => 0
+                 },
+  'INSTALLDIRS' => 'site',
+  'EXE_FILES' => [
+                   'bin/tangence-introspect',
+                   'bin/tangence-subscribeall'
+                 ],
+  'PL_FILES' => {}
+)
 ;

@@ -10,7 +10,7 @@ use warnings;
 
 use base qw( Net::Async::Tangence::Protocol Tangence::Client );
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use Carp;
 
@@ -107,7 +107,7 @@ sub configure
 
 =cut
 
-=head2 $client->connect( $url, %args )
+=head2 $client->connect_url( $url, %args )
 
 Connects to a C<Tangence> server at the given URL.
 
@@ -137,7 +137,7 @@ The following URL schemes are recognised:
 
 =cut
 
-sub connect
+sub connect_url
 {
    my $self = shift;
    my ( $url, %args ) = @_;
@@ -292,10 +292,12 @@ sub connect_unix
    my $self = shift;
    my ( $path, %args ) = @_;
 
-   require Socket;
-
    $self->connect(
-      addr => [ Socket::AF_UNIX(), Socket::SOCK_STREAM(), 0, Socket::pack_sockaddr_un( $path ) ],
+      addr => {
+         family   => 'unix',
+         socktype => 'stream',
+         path     => $path,
+      },
 
       on_connected => sub {
          my ( $self ) = @_;

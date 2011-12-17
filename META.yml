@@ -10,7 +10,7 @@ build_requires:
   Test::More: 0
   Test::Refcount: 0
 dynamic_config: 1
-generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.110930'
+generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.112621'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -19,19 +19,19 @@ name: Net-Async-Tangence
 provides:
   Net::Async::Tangence:
     file: lib/Net/Async/Tangence.pm
-    version: 0.07
+    version: 0.08
   Net::Async::Tangence::Client:
     file: lib/Net/Async/Tangence/Client.pm
-    version: 0.07
+    version: 0.08
   Net::Async::Tangence::Protocol:
     file: lib/Net/Async/Tangence/Protocol.pm
-    version: 0.07
+    version: 0.08
   Net::Async::Tangence::Server:
     file: lib/Net/Async/Tangence/Server.pm
-    version: 0.07
+    version: 0.08
   Net::Async::Tangence::ServerProtocol:
     file: lib/Net/Async/Tangence/ServerProtocol.pm
-    version: 0.07
+    version: 0.08
 requires:
   Encode: 0
   Exporter: 5.57
@@ -45,4 +45,4 @@ requires:
   URI::Split: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.07
+version: 0.08
