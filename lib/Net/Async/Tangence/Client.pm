@@ -10,7 +10,7 @@ use warnings;
 
 use base qw( Net::Async::Tangence::Protocol Tangence::Client );
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 use Carp;
 
@@ -150,6 +150,15 @@ sub connect_url
       $scheme =~ s/^circle\+// or croak "Found a + within URL scheme that is not 'circle+'";
    }
 
+   my $on_connected = delete $args{on_connected};
+   $args{on_connected} = sub {
+      $on_connected->(@_) if $on_connected;
+      $self->tangence_connected( %args );
+   };
+
+   # Legacy name
+   $scheme = "sshexec" if $scheme eq "ssh";
+
    if( $scheme eq "exec" ) {
       # Path will start with a leading /; we need to trim that
       $path =~ s{^/}{};
@@ -157,18 +166,25 @@ sub connect_url
       my @argv = split( m/\+/, $query );
       return $self->connect_exec( [ $path, @argv ], %args );
    }
-   elsif( $scheme eq "ssh" ) {
+   elsif( $scheme eq "sshexec" ) {
       # Path will start with a leading /; we need to trim that
       $path =~ s{^/}{};
       # $query will contain args to exec - split them on +
       my @argv = split( m/\+/, $query );
-      return $self->connect_ssh( $authority, [ $path, @argv ], %args );
+      return $self->connect_sshexec( $authority, [ $path, @argv ], %args );
    }
    elsif( $scheme eq "tcp" ) {
       return $self->connect_tcp( $authority, %args );
    }
    elsif( $scheme eq "unix" ) {
+      # Path will start with a leading /; we need to trim that
+      $path =~ s{^/}{};
       return $self->connect_unix( $path, %args );
+   }
+   elsif( $scheme eq "sshunix" ) {
+      # Path will start with a leading /; we need to trim that
+      $path =~ s{^/}{};
+      return $self->connect_sshunix( $authority, $path, %args );
    }
 
    croak "Unrecognised URL scheme name '$scheme'";
@@ -218,23 +234,24 @@ sub connect_exec
       )
    );
 
-   $args{on_connected}->( $self ) if $args{on_connected};
-   $self->tangence_connected( %args );
+   $args{on_connected}->( $self );
 }
 
-=item * ssh
+=item * sshexec
 
 A convenient wrapper around the C<exec> scheme, to connect to a server running
 remotely via F<ssh>.
 
- ssh://host/path/to/command?with+arguments
+ sshexec://host/path/to/command?with+arguments
 
 The URL's authority section will give the SSH server (and optionally
 username), and the path and query sections will be used as for C<exec>.
 
+(This scheme is also available as C<ssh>, though this name is now deprecated)
+
 =cut
 
-sub connect_ssh
+sub connect_sshexec
 {
    my $self = shift;
    my ( $host, $argv, %args ) = @_;
@@ -267,8 +284,7 @@ sub connect_tcp
       on_connected => sub {
          my ( $self ) = @_;
 
-         $args{on_connected}->( $self ) if $args{on_connected};
-         $self->tangence_connected( %args );
+         $args{on_connected}->( $self );
       },
 
       on_connect_error => sub { print STDERR "Cannot connect\n"; },
@@ -302,11 +318,74 @@ sub connect_unix
       on_connected => sub {
          my ( $self ) = @_;
 
-         $args{on_connected}->( $self ) if $args{on_connected};
-         $self->tangence_connected( %args );
+         $args{on_connected}->( $self );
       },
 
       on_connect_error => sub { print STDERR "Cannot connect\n"; },
+   );
+}
+
+=item * sshunix
+
+Connects to a server running remotely via a UNIX socket over F<ssh>.
+
+ sshunix://host/path/to/socket
+
+(This is implemented by running F<perl> remotely and sending it a tiny
+self-contained program that connects STDIN/STDOUT to the given UNIX socket
+path. It requires that the server has F<perl> at least version 5.6 available
+in the path simply as C<perl>)
+
+=cut
+
+# A tiny program we can run remotely to connect STDIN/STDOUT to a UNIX socket
+# given as $ARGV[0]
+use constant _NC_MICRO => <<'EOPERL';
+use Socket qw( AF_UNIX SOCK_STREAM pack_sockaddr_un );
+use IO::Handle;
+socket(my $socket, AF_UNIX, SOCK_STREAM, 0) or die "socket(AF_UNIX): $!\n";
+connect($socket, pack_sockaddr_un($ARGV[0])) or die "connect $ARGV[0]: $!\n";
+my $fd = fileno($socket);
+$socket->blocking(0); $socket->autoflush(1);
+STDIN->blocking(0); STDOUT->autoflush(1);
+my $rin = "";
+vec($rin, 0, 1) = 1;
+vec($rin, $fd, 1) = 1;
+print "READY";
+while(1) {
+   select(my $rout = $rin, undef, undef, undef);
+   if(vec($rout, 0, 1)) {
+      sysread STDIN, my $buffer, 8192 or last;
+      print $socket $buffer;
+   }
+   if(vec($rout, $fd, 1)) {
+      sysread $socket, my $buffer, 8192 or last;
+      print $buffer;
+   }
+}
+EOPERL
+
+sub connect_sshunix
+{
+   my $self = shift;
+   my ( $host, $path, %args ) = @_;
+
+   my $on_connected = delete $args{on_connected};
+
+   # Tell perl we're going to send it a program on STDIN
+   $self->connect_sshexec( $host, [ 'perl', '-', $path ],
+      %args,
+      on_connected => sub {
+         my $self = shift;
+         $self->write( _NC_MICRO . "\n__END__\n" );
+         $self->configure( on_read => sub {
+            my ( $self, $buffref, $eof ) = @_;
+            return 0 unless $$buffref =~ s/READY//;
+            $self->configure( on_read => undef );
+            $on_connected->( $self );
+            return 0;
+         } );
+      }
    );
 }
 
