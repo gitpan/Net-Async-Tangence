@@ -1,14 +1,19 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 use strict;
+use warnings;
 
-use Test::More tests => 8;
+use Test::More;
 use Test::HexString;
 use IO::Async::Test;
 use IO::Async::Loop;
 use IO::Async::Stream;
 
 use Tangence::Constants;
+
+unless( VERSION_MAJOR == 0 and VERSION_MINOR == 3 ) {
+   plan skip_all => "Tangence version mismatch";
+}
 
 my $loop = IO::Async::Loop->new();
 testing_loop( $loop );
@@ -36,6 +41,8 @@ ok( defined $stream, 'defined $stream' );
 isa_ok( $stream, "Net::Async::Tangence::Protocol", '$stream isa Net::Async::Tangence::Protocol' );
 
 $loop->add( $stream );
+
+$stream->minor_version( 3 );
 
 my $message;
 
@@ -82,6 +89,8 @@ $expect = "\x80" . "\0\0\0\0";
 
 is_hexstr( wait_for_message, $expect, '$serverstream after response' );
 
+done_testing;
+
 package Testing::Protocol;
 
 use strict;
@@ -95,5 +104,3 @@ sub handle_request_EVENT
    push @calls, [ $self, $token, $message ];
    return 1;
 }
-
-1;

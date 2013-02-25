@@ -21,10 +21,10 @@ t/03client.t
 t/04xlink.t
 t/05close.t
 t/99pod.t
-t/Bag.pm
-t/Bag.tan
 t/Ball.pm
 t/Ball.tan
 t/Colourable.pm
 t/Colourable.tan
 t/Conversation.pm
+t/TestObj.pm
+t/TestObj.tan
