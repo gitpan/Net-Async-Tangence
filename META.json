@@ -20,7 +20,7 @@
             "Test::HexString" : "0",
             "Test::Identity" : "0",
             "Test::Memory::Cycle" : "0",
-            "Test::More" : "0",
+            "Test::More" : "0.88",
             "Test::Refcount" : "0"
          }
       },
@@ -42,23 +42,23 @@
    "provides" : {
       "Net::Async::Tangence" : {
          "file" : "lib/Net/Async/Tangence.pm",
-         "version" : "0.10"
+         "version" : "0.11"
       },
       "Net::Async::Tangence::Client" : {
          "file" : "lib/Net/Async/Tangence/Client.pm",
-         "version" : "0.10"
+         "version" : "0.11"
       },
       "Net::Async::Tangence::Protocol" : {
          "file" : "lib/Net/Async/Tangence/Protocol.pm",
-         "version" : "0.10"
+         "version" : "0.11"
       },
       "Net::Async::Tangence::Server" : {
          "file" : "lib/Net/Async/Tangence/Server.pm",
-         "version" : "0.10"
+         "version" : "0.11"
       },
       "Net::Async::Tangence::ServerProtocol" : {
          "file" : "lib/Net/Async/Tangence/ServerProtocol.pm",
-         "version" : "0.10"
+         "version" : "0.11"
       }
    },
    "release_status" : "stable",
@@ -67,5 +67,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.10"
+   "version" : "0.11"
 }

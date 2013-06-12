@@ -18,7 +18,7 @@ WriteMakefile
                    'Test::HexString' => 0,
                    'Test::Identity' => 0,
                    'Test::Memory::Cycle' => 0,
-                   'Test::More' => 0,
+                   'Test::More' => '0.88',
                    'Test::Refcount' => 0,
                    'URI::Split' => 0
                  },
