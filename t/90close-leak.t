@@ -4,6 +4,10 @@ use strict;
 use warnings;
 
 use Test::More;
+BEGIN {
+   plan skip_all => "No Test::MemoryGrowth" unless eval { require Test::MemoryGrowth };
+}
+use Test::MemoryGrowth;
 use IO::Async::Test;
 use IO::Async::Loop;
 use IO::Async::OS;
@@ -35,11 +39,10 @@ my $server = Net::Async::Tangence::Server->new(
 
 $loop->add( $server );
 
-my ( $conn1, $conn2 ) = map {
+no_growth {
    my ( $S1, $S2 ) = IO::Async::OS->socketpair() or die "Cannot create socket pair - $!";
-   my $conn;
 
-   my $serverconn = $server->make_new_connection( $S1 );
+   $server->make_new_connection( $S1 );
 
    my $client = Net::Async::Tangence::Client->new( handle => $S2 );
    $loop->add( $client );
@@ -47,41 +50,18 @@ my ( $conn1, $conn2 ) = map {
    my $ballproxy;
    wait_for { $ballproxy = $client->rootobj };
 
-   $conn = {
-      server    => $serverconn,
-      client    => $client,
-      ballproxy => $ballproxy,
-   };
-
    my $watched;
    $ballproxy->watch_property(
       property => "colour",
-      on_set => sub { $conn->{colour} = shift },
+      on_set => sub {},
       on_watched => sub { $watched++ },
    );
 
    wait_for { $watched };
 
-   $conn
-} 1 .. 2;
-
-$ball->set_prop_colour( "green" );
-
-wait_for { defined $conn1->{colour} and defined $conn2->{colour} };
-
-is( $conn1->{colour}, "green", '$colour is green from connection 1' );
-is( $conn2->{colour}, "green", '$colour is green from connection 2' );
-
-$conn1->{client}->close;
-
-$loop->loop_once( 0 ) for 1 .. 10; # ensure the close event is properly flushed
-
-$ball->set_prop_colour( "blue" );
-
-undef $_->{colour} for $conn1, $conn2;
-wait_for { defined $conn2->{colour} };
-
-is( $conn1->{colour}, undef,  '$colour is still undef from (closed) connection 1' );
-is( $conn2->{colour}, "blue", '$colour is blue from connection 2' );
+   $client->close;
+   $loop->loop_once( 0 );
+} calls => 100,
+   'Connect/watch/disconnect does not grow memory';
 
 done_testing;

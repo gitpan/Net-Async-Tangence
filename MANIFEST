@@ -2,7 +2,6 @@ bin/tangence-introspect
 bin/tangence-subscribeall
 Build.PL
 Changes
-doc/Tangence-overview.txt
 lib/Net/Async/Tangence.pm
 lib/Net/Async/Tangence/Client.pm
 lib/Net/Async/Tangence/Protocol.pm
@@ -20,6 +19,7 @@ t/02server.t
 t/03client.t
 t/04xlink.t
 t/05close.t
+t/90close-leak.t
 t/99pod.t
 t/Ball.pm
 t/Ball.tan

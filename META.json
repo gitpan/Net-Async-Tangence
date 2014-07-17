@@ -4,7 +4,7 @@
       "Paul Evans <leonerd@leonerd.org.uk>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4001, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Module::Build version 0.4205",
    "license" : [
       "perl_5"
    ],
@@ -30,11 +30,10 @@
             "Exporter" : "5.57",
             "IO::Async::Listener" : "0.36",
             "IO::Async::Loop" : "0.16",
-            "IO::Async::Protocol::Stream" : "0",
             "IO::Async::Stream" : "0",
             "IO::Async::Test" : "0",
-            "Tangence::Client" : "0.17",
-            "Tangence::Server" : "0.17",
+            "Tangence::Client" : "0.19",
+            "Tangence::Server" : "0.19",
             "URI::Split" : "0"
          }
       }
@@ -42,23 +41,23 @@
    "provides" : {
       "Net::Async::Tangence" : {
          "file" : "lib/Net/Async/Tangence.pm",
-         "version" : "0.11"
+         "version" : "0.12"
       },
       "Net::Async::Tangence::Client" : {
          "file" : "lib/Net/Async/Tangence/Client.pm",
-         "version" : "0.11"
+         "version" : "0.12"
       },
       "Net::Async::Tangence::Protocol" : {
          "file" : "lib/Net/Async/Tangence/Protocol.pm",
-         "version" : "0.11"
+         "version" : "0.12"
       },
       "Net::Async::Tangence::Server" : {
          "file" : "lib/Net/Async/Tangence/Server.pm",
-         "version" : "0.11"
+         "version" : "0.12"
       },
       "Net::Async::Tangence::ServerProtocol" : {
          "file" : "lib/Net/Async/Tangence/ServerProtocol.pm",
-         "version" : "0.11"
+         "version" : "0.12"
       }
    },
    "release_status" : "stable",
@@ -67,5 +66,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.11"
+   "version" : "0.12"
 }

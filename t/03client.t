@@ -19,7 +19,7 @@ use t::Conversation;
 use Net::Async::Tangence::Client;
 $Tangence::Message::SORT_HASH_KEYS = 1;
 
-unless( VERSION_MAJOR == 0 and VERSION_MINOR == 3 ) {
+unless( VERSION_MAJOR == 0 and VERSION_MINOR == 4 ) {
    plan skip_all => "Tangence version mismatch";
 }
 
@@ -93,7 +93,7 @@ memory_cycle_ok( $objproxy, '$objproxy has no memory cycles' );
 # Deconfigure the clientection otherwise Devel::Cycle will throw
 #   Unhandled type: GLOB at /usr/share/perl5/Devel/Cycle.pm line 107.
 # on account of filehandles
-$client->configure( transport => undef );
+$client->configure( handle => undef );
 memory_cycle_ok( $client, '$client has no memory cycles' );
 
 done_testing;

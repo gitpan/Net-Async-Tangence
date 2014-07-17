@@ -9,8 +9,9 @@ use strict;
 use warnings;
 
 use base qw( Net::Async::Tangence::Protocol Tangence::Server );
+use mro 'c3';
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 use Carp;
 
@@ -35,6 +36,8 @@ sub _init
    $self->registry( delete $params->{registry} );
 
    $params->{on_closed} ||= undef;
+
+   $self->SUPER::_init( $params );
 }
 
 sub configure

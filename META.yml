@@ -3,46 +3,45 @@ abstract: 'use C<Tangence> with C<IO::Async>'
 author:
   - 'Paul Evans <leonerd@leonerd.org.uk>'
 build_requires:
-  Test::Fatal: 0.006
-  Test::HexString: 0
-  Test::Identity: 0
-  Test::Memory::Cycle: 0
-  Test::More: 0.88
-  Test::Refcount: 0
+  Test::Fatal: '0.006'
+  Test::HexString: '0'
+  Test::Identity: '0'
+  Test::Memory::Cycle: '0'
+  Test::More: '0.88'
+  Test::Refcount: '0'
 dynamic_config: 1
-generated_by: 'Module::Build version 0.4001, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Module::Build version 0.4205, CPAN::Meta::Converter version 2.133380'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
+  version: '1.4'
 name: Net-Async-Tangence
 provides:
   Net::Async::Tangence:
     file: lib/Net/Async/Tangence.pm
-    version: 0.11
+    version: '0.12'
   Net::Async::Tangence::Client:
     file: lib/Net/Async/Tangence/Client.pm
-    version: 0.11
+    version: '0.12'
   Net::Async::Tangence::Protocol:
     file: lib/Net/Async/Tangence/Protocol.pm
-    version: 0.11
+    version: '0.12'
   Net::Async::Tangence::Server:
     file: lib/Net/Async/Tangence/Server.pm
-    version: 0.11
+    version: '0.12'
   Net::Async::Tangence::ServerProtocol:
     file: lib/Net/Async/Tangence/ServerProtocol.pm
-    version: 0.11
+    version: '0.12'
 requires:
-  Encode: 0
-  Exporter: 5.57
-  IO::Async::Listener: 0.36
-  IO::Async::Loop: 0.16
-  IO::Async::Protocol::Stream: 0
-  IO::Async::Stream: 0
-  IO::Async::Test: 0
-  Tangence::Client: 0.17
-  Tangence::Server: 0.17
-  URI::Split: 0
+  Encode: '0'
+  Exporter: '5.57'
+  IO::Async::Listener: '0.36'
+  IO::Async::Loop: '0.16'
+  IO::Async::Stream: '0'
+  IO::Async::Test: '0'
+  Tangence::Client: '0.19'
+  Tangence::Server: '0.19'
+  URI::Split: '0'
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.11
+version: '0.12'
